@@ -80,10 +80,10 @@ const SidebarContent = props => {
           }
         }
       }
-      scrollElement(item);
+      scrollElement(item)
       return false
     }
-    scrollElement(item);
+    scrollElement(item)
     return false
   }
 
@@ -96,8 +96,17 @@ const SidebarContent = props => {
             <li>
               <Link to="/dashboard" className="waves-effect">
                 <i className="ti-home"></i>
-                <span className="badge rounded-pill bg-primary float-end">2</span>
+                <span className="badge rounded-pill bg-primary float-end">
+                  2
+                </span>
                 <span>{props.t("Dashboard")}</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/csv-loader" className=" waves-effect">
+                <i className="ti-files"></i>
+                <span>{props.t("CSV Loader")}</span>
               </Link>
             </li>
 
@@ -200,7 +209,9 @@ const SidebarContent = props => {
             <li>
               <Link to="/#" className="waves-effect">
                 <i className="ti-receipt"></i>
-                <span className="badge rounded-pill bg-success float-end">6</span>
+                <span className="badge rounded-pill bg-success float-end">
+                  6
+                </span>
                 <span>{props.t("Forms")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
@@ -208,7 +219,9 @@ const SidebarContent = props => {
                   <Link to="/form-elements">{props.t("Form Elements")}</Link>
                 </li>
                 <li>
-                  <Link to="/form-validation">{props.t("Form Validation")}</Link>
+                  <Link to="/form-validation">
+                    {props.t("Form Validation")}
+                  </Link>
                 </li>
                 <li>
                   <Link to="/form-advanced">{props.t("Form Advanced")}</Link>
@@ -253,7 +266,9 @@ const SidebarContent = props => {
                   <Link to="apex-charts">{props.t("Apex charts")}</Link>
                 </li>
                 <li>
-                  <Link to="sparkline-charts">{props.t("Sparkline Chart")}</Link>
+                  <Link to="sparkline-charts">
+                    {props.t("Sparkline Chart")}
+                  </Link>
                 </li>
               </ul>
             </li>
@@ -311,7 +326,9 @@ const SidebarContent = props => {
             <li>
               <Link to="/#">
                 <i className="ti-location-pin"></i>
-                <span className="badge rounded-pill bg-danger float-end">2</span>
+                <span className="badge rounded-pill bg-danger float-end">
+                  2
+                </span>
                 <span>{props.t("Maps")}</span>
               </Link>
               <ul className="sub-menu" aria-expanded="false">
@@ -333,7 +350,6 @@ const SidebarContent = props => {
               <Link to="/#" className="has-arrow waves-effect">
                 <i className="ti-archive"></i>
                 <span>{props.t("Authentication")}</span>
-
               </Link>
               <ul className="sub-menu">
                 <li>
@@ -418,13 +434,19 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu">
                 <li>
-                  <Link to="/email-template-basic">{props.t("Basic Action Email")}</Link>
+                  <Link to="/email-template-basic">
+                    {props.t("Basic Action Email")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/email-template-Alert">{props.t("Alert Email")}</Link>
+                  <Link to="/email-template-Alert">
+                    {props.t("Alert Email")}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/email-template-Billing">{props.t("Billing Email")}</Link>
+                  <Link to="/email-template-Billing">
+                    {props.t("Billing Email")}
+                  </Link>
                 </li>
               </ul>
             </li>
