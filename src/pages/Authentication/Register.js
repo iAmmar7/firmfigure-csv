@@ -1,35 +1,38 @@
-import PropTypes from "prop-types"
-import React, { useEffect } from "react"
-import MetaTags from 'react-meta-tags';
-import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap"
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import MetaTags from "react-meta-tags";
+import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap";
 
 // availity-reactstrap-validation
-import { AvForm, AvField } from "availity-reactstrap-validation"
+import { AvForm, AvField } from "availity-reactstrap-validation";
 
 // action
-import { registerUser, apiError, registerUserFailed } from "../../store/actions"
+import {
+  registerUser,
+  apiError,
+  registerUserFailed,
+} from "../../store/actions";
 
 // Redux
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // import images
 import logoSm from "../../assets/images/logo-sm.png";
 
 const Register = props => {
-  // handleValidSubmit
   const handleValidSubmit = (event, values) => {
-    props.registerUser(values)
-  }
+    props.registerUser(values);
+  };
 
   useEffect(() => {
-    props.apiError("")
+    props.apiError("");
   }, []);
 
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Register | Veltrix - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>SignUp | Petromin Admin Dashboard</title>
       </MetaTags>
       <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
@@ -43,8 +46,10 @@ const Register = props => {
               <Card className="overflow-hidden">
                 <div className="bg-primary">
                   <div className="text-primary text-center p-4">
-                    <h5 className="text-white font-size-20">Free Register</h5>
-                    <p className="text-white-50">Get your free Veltrix account now.</p>
+                    <h5 className="text-white font-size-20">Sign Up</h5>
+                    <p className="text-white-50">
+                      Please register yourself here
+                    </p>
                     <a href="index.html" className="logo logo-admin">
                       <img src={logoSm} height="24" alt="logo" />
                     </a>
@@ -55,21 +60,18 @@ const Register = props => {
                     <AvForm
                       className="mt-4"
                       onValidSubmit={(e, v) => {
-                        handleValidSubmit(e, v)
+                        handleValidSubmit(e, v);
                       }}
                     >
-                      {props.user && props.user ? (
+                      {props.user && (
                         <Alert color="success">
                           Register User Successfully
                         </Alert>
-                      ) : null}
+                      )}
 
-                      {props.registrationError &&
-                        props.registrationError ? (
-                          <Alert color="danger">
-                            {props.registrationError}
-                          </Alert>
-                        ) : null}
+                      {props.registrationError && (
+                        <Alert color="danger">{props.registrationError}</Alert>
+                      )}
 
                       <div className="mb-3">
                         <AvField
@@ -86,10 +88,10 @@ const Register = props => {
                       <div className="mb-3">
                         <AvField
                           name="username"
-                          label="Username"
+                          label="Name"
                           type="text"
                           required
-                          placeholder="Enter username"
+                          placeholder="Enter name"
                         />
                       </div>
                       <div className="mb-3">
@@ -112,22 +114,11 @@ const Register = props => {
                           </button>
                         </div>
                       </div>
-
-                      <div className="mt-2 mb-0 row">
-                        <div className="col-12 mt-4">
-                          <p className="mb-0">
-                            By registering you agree to the Veltrix{" "}
-                            <Link to="#" className="text-primary">
-                              Terms of Use
-                            </Link>
-                          </p>
-                        </div>
-                      </div>
                     </AvForm>
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
+              <div className="mt-3 text-center">
                 <p>
                   Already have an account ?{" "}
                   <Link to="/login" className="fw-medium text-primary">
@@ -136,8 +127,8 @@ const Register = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Veltrix. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()}{" "}
+                  <i className="mdi mdi-heart text-danger" /> Petromin
                 </p>
               </div>
             </Col>
@@ -145,23 +136,23 @@ const Register = props => {
         </Container>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
 Register.propTypes = {
   registerUser: PropTypes.func,
   registerUserFailed: PropTypes.func,
   registrationError: PropTypes.any,
   user: PropTypes.any,
-}
+};
 
 const mapStatetoProps = state => {
-  const { user, registrationError, loading } = state.Account
-  return { user, registrationError, loading }
-}
+  const { user, registrationError, loading } = state.Account;
+  return { user, registrationError, loading };
+};
 
 export default connect(mapStatetoProps, {
   registerUser,
   apiError,
   registerUserFailed,
-})(Register)
+})(Register);

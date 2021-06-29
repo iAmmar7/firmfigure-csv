@@ -2,14 +2,14 @@ import {
   REGISTER_USER,
   REGISTER_USER_SUCCESSFUL,
   REGISTER_USER_FAILED,
-} from "./actionTypes"
+} from "./actionTypes";
 
 const initialState = {
   registrationError: null,
   message: null,
   loading: false,
   user: null,
-}
+};
 
 const account = (state = initialState, action) => {
   switch (action.type) {
@@ -18,29 +18,29 @@ const account = (state = initialState, action) => {
         ...state,
         loading: true,
         registrationError: null,
-      }
-      break
+      };
+      break;
     case REGISTER_USER_SUCCESSFUL:
       state = {
         ...state,
         loading: false,
         user: action.payload,
         registrationError: null,
-      }
-      break
+      };
+      break;
     case REGISTER_USER_FAILED:
       state = {
         ...state,
         user: null,
         loading: false,
         registrationError: action.payload,
-      }
-      break
+      };
+      break;
     default:
-      state = { ...state }
-      break
+      state = { ...state };
+      break;
   }
-  return state
-}
+  return state;
+};
 
-export default account
+export default account;

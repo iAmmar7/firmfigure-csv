@@ -13,26 +13,21 @@ router.get("/test", async (req, res) =>
   res.status(200).json({ message: "Test route working" })
 );
 
-// @route   POST /api/auth/user/signup
+// @route   POST /api/auth/signup
 // @desc    user Signup
 // @access  Public
-router.post("/user/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/signup", async (req, res) => {
+  const { username, email, password } = req.body;
 
   const user = await User.findOne({ email });
 
   if (user) {
     return res.status(400).json({
       success: false,
-      message: "Account already exist with this Badge Number",
+      message: "Account already exist with this email",
     });
   } else {
-    // const newUser = await User.create({ name, badgeNumber, password, role });
-    // if (!newUser) return res.status(400).json({ success: false, message: 'Unable to signup' });
-    // newUser.password = null;
-    // return res.status(200).json({ success: true, user: newUser });
-
-    const newUser = new User({ name, email, password });
+    const newUser = new User({ name: username, email, password });
 
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -40,7 +35,10 @@ router.post("/user/signup", async (req, res) => {
         newUser.password = hash;
         newUser
           .save()
-          .then(user => res.status(200).json({ success: true, user }))
+          .then(user => {
+            user.password = undefined;
+            return res.status(200).json({ success: true, user });
+          })
           .catch(err =>
             res
               .status(400)
@@ -51,10 +49,10 @@ router.post("/user/signup", async (req, res) => {
   }
 });
 
-// @route   GET /api/auth/user/login
+// @route   POST /api/auth/login
 // @desc    User Login
 // @access  Public
-router.post("/user/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
