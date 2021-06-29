@@ -27,3 +27,7 @@ package.json
 package-lock.json
 .eslintcache
 debug.log
+
+# server
+server/package-lock.json
+server/node_modules

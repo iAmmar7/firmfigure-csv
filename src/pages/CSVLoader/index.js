@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import MetaTags from "react-meta-tags"
 import {
   Container,
@@ -13,6 +13,7 @@ import {
 import Breadcrumbs from "../../components/Common/Breadcrumb"
 
 function CSVLoader() {
+  const [uploading, setUploading] = useState(0)
   return (
     <React.Fragment>
       <div className="page-content">
@@ -28,7 +29,7 @@ function CSVLoader() {
             <CardBody>
               <Row className="align-items-center justify-content-center">
                 <Col xs="8" sm="10" lg="10">
-                  <Progress animated color="primary" value="80" />
+                  <Progress animated color="primary" value={uploading} />
                 </Col>
                 <Col xs="4" sm="2" lg="2" className="text-end">
                   <Button color="primary">Upload a CSV</Button>
