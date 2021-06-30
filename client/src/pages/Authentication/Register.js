@@ -48,7 +48,7 @@ const Register = props => {
                   <div className="text-primary text-center p-4">
                     <h5 className="text-white font-size-20">Sign Up</h5>
                     <p className="text-white-50">
-                      Please register yourself here
+                      Register yourself to use Petromin Dashboard
                     </p>
                     <a href="index.html" className="logo logo-admin">
                       <img src={logoSm} height="24" alt="logo" />
@@ -127,8 +127,8 @@ const Register = props => {
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()}{" "}
-                  <i className="mdi mdi-heart text-danger" /> Petromin
+                  Petromin © {new Date().getFullYear()}{" "}
+                  <i className="mdi mdi-heart text-danger" /> Dashboard
                 </p>
               </div>
             </Col>
