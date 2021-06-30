@@ -3,8 +3,10 @@ import axios from "axios";
 // Pass new generated access token here
 const token = localStorage.getItem("authToken");
 
-// const API_URL = `${process.env.PETROMIN_CSV_DEV_BE_URL}/api`;
-const API_URL = "http://localhost:4000/api";
+const API_URL =
+  process.env.REACT_APP_NODE_ENV === "development"
+    ? `${process.env.REACT_APP_PETROMIN_CSV_DEV_BE_URL}/api`
+    : `${process.env.REACT_APP_PETROMIN_CSV_PROD_BE_URL}/api`;
 
 const axiosApi = axios.create({
   baseURL: API_URL,

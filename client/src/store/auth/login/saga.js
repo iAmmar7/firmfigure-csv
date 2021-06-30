@@ -12,7 +12,7 @@ function* loginUser({ payload: { user, history } }) {
   try {
     const response = yield call(post, "/auth/login", user);
     localStorage.setItem("authUser", JSON.stringify(response.user));
-    localStorage.setItem("authToken", JSON.stringify(response.token));
+    localStorage.setItem("authToken", response.token);
     yield put(loginSuccess(response.user));
     history.push("/dashboard");
   } catch (error) {
