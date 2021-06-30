@@ -1,9 +1,9 @@
-const express = require("express");
-const path = require("path");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const passport = require("passport");
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const passport = require('passport');
 
 const app = express();
 
@@ -11,11 +11,11 @@ const app = express();
 dotenv.config();
 
 // Load Routes
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 // Load Middlewares
-const { userAuth, userRole } = require("./middlewares");
+const { userAuth } = require('./middlewares');
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,29 +24,24 @@ app.use(cors());
 app.use(passport.initialize());
 
 // Serve images
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Connect to MongoDB
-require("./db/mongoose");
+require('./db/mongoose');
 
 // Passport Config
-require("./config/passport")(passport);
+require('./config/passport')(passport);
 
 // Use Routes
-app.use("/api/auth", authRoutes);
-app.use(
-  "/api/user",
-  userAuth,
-  userRole(["auditor", "rm", "am", "sm", "viewer"]),
-  userRoutes
-);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userAuth, userRoutes);
 
 // Serve Frontend in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/dist")));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/dist')));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/dist/", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/dist/', 'index.html'));
   });
 }
 

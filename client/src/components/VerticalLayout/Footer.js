@@ -1,5 +1,5 @@
-import React from "react"
-import { Container, Row, Col } from "reactstrap"
+import React from "react";
+import { Container, Row, Col } from "reactstrap";
 
 const Footer = () => {
   return (
@@ -8,14 +8,14 @@ const Footer = () => {
         <Container fluid={true}>
           <Row>
             <div className="col-12">
-              © {new Date().getFullYear()} Veltrix<span className="d-none d-sm-inline-block"> - Crafted with 
-              {" "}<i className="mdi mdi-heart text-danger"></i> by Themesbrand.</span>
+              Petromin © {new Date().getFullYear()}{" "}
+              <i className="mdi mdi-heart text-danger" /> Dashboard
             </div>
           </Row>
         </Container>
       </footer>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
