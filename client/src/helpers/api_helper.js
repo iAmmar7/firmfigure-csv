@@ -1,9 +1,8 @@
 import axios from "axios";
 
-//pass new generated access token here
+// Pass new generated access token here
 const token = localStorage.getItem("authToken");
 
-//apply base url for axios
 // const API_URL = `${process.env.PETROMIN_CSV_DEV_BE_URL}/api`;
 const API_URL = "http://localhost:4000/api";
 
