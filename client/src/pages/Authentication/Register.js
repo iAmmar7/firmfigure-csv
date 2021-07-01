@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 
 // import images
 import logoSm from "../../assets/images/logo-sm.png";
+import userAvatar from "../../assets/images/users/user-avatar.png";
 
 const Register = props => {
   const handleValidSubmit = (event, values) => {
@@ -51,7 +52,8 @@ const Register = props => {
                       Register yourself to use Petromin Dashboard
                     </p>
                     <a href="index.html" className="logo logo-admin">
-                      <img src={logoSm} height="24" alt="logo" />
+                      <img src={userAvatar} height="50" alt="logo" />
+                      {/* <img src={logoSm} height="24" alt="logo" /> */}
                     </a>
                   </div>
                 </div>

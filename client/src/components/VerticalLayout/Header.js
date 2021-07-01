@@ -22,6 +22,7 @@ import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu";
 import logodarkImg from "../../assets/images/logo-dark.png";
 import logosmImg from "../../assets/images/logo-sm.png";
 import logolightImg from "../../assets/images/logo-light.png";
+import userAvatar from "../../assets/images/users/user-avatar.png";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -82,21 +83,28 @@ const Header = props => {
         <div className="navbar-header">
           <div className="d-flex">
             <div className="navbar-brand-box">
-              <Link to="/" className="logo logo-dark">
+              <Link to="/csv-loader" className="logo logo-dark">
                 <span className="logo-sm">
+                  <img src={userAvatar} alt="" height="22" />
+                </span>
+                <span className="logo-lg text-white">
+                  <img src={userAvatar} alt="" height="28" /> Petromin Dashboard
+                </span>
+
+                {/* <span className="logo-sm">
                   <img src={logosmImg} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
                   <img src={logodarkImg} alt="" height="17" />
-                </span>
+                </span> */}
               </Link>
 
-              <Link to="/" className="logo logo-light">
+              <Link to="/csv-loader" className="logo logo-light">
                 <span className="logo-sm">
-                  <img src={logosmImg} alt="" height="22" />
+                  <img src={userAvatar} alt="" height="22" />
                 </span>
-                <span className="logo-lg">
-                  <img src={logolightImg} alt="" height="18" />
+                <span className="logo-lg text-white">
+                  <img src={userAvatar} alt="" height="28" /> Petromin Dashboard
                 </span>
               </Link>
             </div>

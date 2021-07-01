@@ -14,7 +14,8 @@ function* loginUser({ payload: { user, history } }) {
     localStorage.setItem("authUser", JSON.stringify(response.user));
     localStorage.setItem("authToken", response.token);
     yield put(loginSuccess(response.user));
-    history.push("/dashboard");
+    // history.push("/dashboard");
+    history.push("/csv-loader");
   } catch (error) {
     yield put(apiError(error?.response?.data?.message || "Unknown error"));
   }

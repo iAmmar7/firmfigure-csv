@@ -15,6 +15,7 @@ import { withRouter, Link } from "react-router-dom";
 
 // users
 import user1 from "../../../assets/images/users/user-4.jpg";
+import userAvatar from "../../../assets/images/users/user-avatar.png";
 
 const ProfileMenu = props => {
   // Declare a new state variable, which we'll call "menu"
@@ -51,7 +52,7 @@ const ProfileMenu = props => {
         >
           <img
             className="rounded-circle header-profile-user"
-            src={user1}
+            src={userAvatar}
             alt="Header Avatar"
           />
         </DropdownToggle>

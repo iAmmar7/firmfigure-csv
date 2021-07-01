@@ -17,6 +17,7 @@ import { loginUser, apiError } from "../../store/actions";
 
 // import images
 import logoSm from "../../assets/images/logo-sm.png";
+import userAvatar from "../../assets/images/users/user-avatar.png";
 
 const Login = props => {
   const handleValidSubmit = (event, values) => {
@@ -26,7 +27,8 @@ const Login = props => {
   if (localStorage.getItem("authToken"))
     return (
       <Redirect
-        to={{ pathname: "/dashboard", state: { from: props.location } }}
+        // to={{ pathname: "/dashboard", state: { from: props.location } }}
+        to={{ pathname: "/csv-loader", state: { from: props.location } }}
       />
     );
 
@@ -52,7 +54,7 @@ const Login = props => {
                       Sign in to continue to Petromin Dashboard
                     </p>
                     <Link to="/" className="logo logo-admin">
-                      <img src={logoSm} height="24" alt="logo" />
+                      <img src={userAvatar} height="50" alt="logo" />
                     </Link>
                   </div>
                 </div>
