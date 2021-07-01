@@ -18,6 +18,9 @@ const CSVSchema = new Schema(
     AttendentID: {
       type: String,
     },
+    AttendentName: {
+      type: String,
+    },
     CustomerID: {
       type: String,
     },

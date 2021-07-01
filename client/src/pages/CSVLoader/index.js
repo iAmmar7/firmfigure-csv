@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import MetaTags from "react-meta-tags";
-import { Link } from "react-router-dom";
+import moment from "moment";
 import {
   Alert,
   Container,
@@ -18,6 +18,7 @@ import {
 // import { uploadCSV, apiError, uploadCSVFailed } from "../../store/actions";
 
 // import images
+import user1 from "../../assets/images/users/user-1.jpg";
 import user2 from "../../assets/images/users/user-2.jpg";
 import user3 from "../../assets/images/users/user-3.jpg";
 import user4 from "../../assets/images/users/user-4.jpg";
@@ -139,7 +140,7 @@ function CSVLoader(props) {
 
           {/* CSV Upload Error */}
           {error && (
-            <Alert color="danger" className="mb-0">
+            <Alert color="danger" className="mb-4">
               <strong>Oh snap!</strong> {error}.
             </Alert>
           )}
@@ -213,245 +214,85 @@ function CSVLoader(props) {
 
           {/* Table */}
           <Row>
-            <Col xl={9}>
+            <Col xl={12}>
               <Card>
                 <CardBody>
-                  <h4 className="card-title mb-4">Latest Transaction</h4>
+                  <h4 className="card-title mb-4">Summary</h4>
                   <div className="table-responsive">
                     <table className="table table-hover table-centered table-nowrap mb-0">
                       <thead>
                         <tr>
-                          <th scope="col">(#) Id</th>
-                          <th scope="col">Name</th>
+                          <th scope="col">#</th>
                           <th scope="col">Date</th>
+                          <th scope="col">Attendent Name</th>
+                          <th scope="col">Customer Name</th>
+                          <th scope="col">Product Type</th>
+                          <th scope="col">Unit Price</th>
+                          <th scope="col">Quanitiy</th>
                           <th scope="col">Amount</th>
-                          <th scope="col" colSpan="2">
-                            Status
-                          </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <th scope="row">#14256</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user2}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              Philip Smead
-                            </div>
-                          </td>
-                          <td>15/1/2018</td>
-                          <td>$94</td>
-                          <td>
-                            <span className="badge bg-success">Delivered</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">#14257</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user3}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              Brent Shipley
-                            </div>
-                          </td>
-                          <td>16/1/2019</td>
-                          <td>$112</td>
-                          <td>
-                            <span className="badge bg-warning">Pending</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">#14258</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user4}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              Robert Sitton
-                            </div>
-                          </td>
-                          <td>17/1/2019</td>
-                          <td>$116</td>
-                          <td>
-                            <span className="badge bg-success">Delivered</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">#14259</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user5}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              Alberto Jackson
-                            </div>
-                          </td>
-                          <td>18/1/2019</td>
-                          <td>$109</td>
-                          <td>
-                            <span className="badge bg-danger">Cancel</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">#14260</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user6}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              David Sanchez
-                            </div>
-                          </td>
-                          <td>19/1/2019</td>
-                          <td>$120</td>
-                          <td>
-                            <span className="badge bg-success">Delivered</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">#14261</th>
-                          <td>
-                            <div>
-                              <img
-                                src={user2}
-                                alt=""
-                                className="avatar-xs rounded-circle me-2"
-                              />{" "}
-                              Philip Smead
-                            </div>
-                          </td>
-                          <td>15/1/2018</td>
-                          <td>$94</td>
-                          <td>
-                            <span className="badge bg-warning">Pending</span>
-                          </td>
-                          <td>
-                            <div>
-                              <Link to="#" className="btn btn-primary btn-sm">
-                                Edit
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
+                        {csvData.length < 1
+                          ? null
+                          : csvData.map((data, index) => (
+                              <tr key={data._id}>
+                                <th scope="row">{index + 1}</th>
+                                <td>
+                                  {moment(data.Date).format("DD/MM/YYYY")}
+                                </td>
+                                <td>
+                                  <div>
+                                    <img
+                                      src={
+                                        [
+                                          user1,
+                                          user2,
+                                          user3,
+                                          user4,
+                                          user5,
+                                          user6,
+                                        ][
+                                          Math.floor(
+                                            Math.random() *
+                                              [
+                                                user1,
+                                                user2,
+                                                user3,
+                                                user4,
+                                                user5,
+                                                user6,
+                                              ].length
+                                          )
+                                        ]
+                                      }
+                                      alt=""
+                                      className="avatar-xs rounded-circle me-2"
+                                    />{" "}
+                                    {data.AttendentName}
+                                  </div>
+                                </td>
+                                <td>{data.CustomerName}</td>
+                                {data.ProductType === "Sale" ? (
+                                  <td>
+                                    <span className="badge bg-success">
+                                      Sale
+                                    </span>
+                                  </td>
+                                ) : (
+                                  <td>
+                                    <span className="badge bg-primary">
+                                      Service
+                                    </span>
+                                  </td>
+                                )}
+                                <td>{data.ProductUnitPrice}</td>
+                                <td>{data.ProductQuantityTotal}</td>
+                                <td>{data.Amount}</td>
+                              </tr>
+                            ))}
                       </tbody>
                     </table>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col xl={3}>
-              <Card>
-                <CardBody>
-                  <div>
-                    <h4 className="card-title mb-4">Sales Analytics</h4>
-                  </div>
-                  <div className="wid-peity mb-4">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div>
-                          <p className="text-muted">Online</p>
-                          <h5 className="mb-4">1,542</h5>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-4">
-                          <SparkLine />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="wid-peity mb-4">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div>
-                          <p className="text-muted">Offline</p>
-                          <h5 className="mb-4">6,451</h5>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-4">
-                          <SparkLine1 />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="wid-peity mb-4">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div>
-                          <p className="text-muted">Marketing</p>
-                          <h5>84,574</h5>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-4">
-                          <SparkLine />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="wid-peity mb-4">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div>
-                          <p className="text-muted">Offline</p>
-                          <h5 className="mb-4">6,451</h5>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="mb-4">
-                          <SparkLine1 />
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </CardBody>
               </Card>
