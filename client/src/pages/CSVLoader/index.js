@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import MetaTags from "react-meta-tags";
+import { MDBDataTable } from "mdbreact";
 import moment from "moment";
 import {
   Alert,
@@ -9,6 +10,7 @@ import {
   Col,
   Button,
   Card,
+  CardTitle,
   CardBody,
   Progress,
   CustomInput,
@@ -116,7 +118,70 @@ function CSVLoader(props) {
     }, 0),
   }));
 
-  console.log("servicesChartData", servicesChartData);
+  const tableData = {
+    columns: [
+      {
+        label: "#",
+        field: "id",
+        sort: "asc",
+        width: 50,
+      },
+      {
+        label: "Date",
+        field: "Date",
+        sort: "asc",
+        width: 150,
+      },
+      {
+        label: "AttendentName",
+        field: "AttendentName",
+        sort: "asc",
+        width: 200,
+      },
+      {
+        label: "CustomerName",
+        field: "CustomerName",
+        sort: "asc",
+        width: 200,
+      },
+      {
+        label: "Product Type",
+        field: "ProductType",
+        sort: "asc",
+        width: 150,
+      },
+      {
+        label: "Unit Price",
+        field: "ProductUnitPrice",
+        sort: "asc",
+        width: 100,
+      },
+      {
+        label: "Quantity",
+        field: "ProductQuantityTotal",
+        sort: "asc",
+        width: 100,
+      },
+      {
+        label: "Amount",
+        field: "Amount",
+        sort: "asc",
+        width: 100,
+      },
+    ],
+    rows: (csvData || []).map((data, index) => ({
+      id: index + 1,
+      Date: moment(data.Date).format("DD/MM/YYYY"),
+      AttendentName: data.AttendentName,
+      CustomerName: data.CustomerName,
+      ProductType: data.ProductType,
+      ProductUnitPrice: data.ProductUnitPrice,
+      ProductQuantityTotal: data.ProductQuantityTotal,
+      Amount: data.Amount,
+    })),
+  };
+
+  console.log("tableData", tableData);
 
   return (
     <React.Fragment>
@@ -256,86 +321,21 @@ function CSVLoader(props) {
 
           {/* Table */}
           <Row>
-            <Col xl={12}>
+            <Col className="col-12">
               <Card>
                 <CardBody>
-                  <h4 className="card-title mb-4">Summary</h4>
-                  <div className="table-responsive">
-                    <table className="table table-hover table-centered table-nowrap mb-0">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">Attendent Name</th>
-                          <th scope="col">Customer Name</th>
-                          <th scope="col">Product Type</th>
-                          <th scope="col">Unit Price</th>
-                          <th scope="col">Quanitiy</th>
-                          <th scope="col">Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {csvData.length < 1
-                          ? null
-                          : csvData.map((data, index) => (
-                              <tr key={data._id}>
-                                <th scope="row">{index + 1}</th>
-                                <td>
-                                  {moment(data.Date).format("DD/MM/YYYY")}
-                                </td>
-                                <td>
-                                  <div>
-                                    <img
-                                      src={
-                                        [
-                                          user1,
-                                          user2,
-                                          user3,
-                                          user4,
-                                          user5,
-                                          user6,
-                                        ][
-                                          Math.floor(
-                                            Math.random() *
-                                              [
-                                                user1,
-                                                user2,
-                                                user3,
-                                                user4,
-                                                user5,
-                                                user6,
-                                              ].length
-                                          )
-                                        ]
-                                      }
-                                      alt=""
-                                      className="avatar-xs rounded-circle me-2"
-                                    />{" "}
-                                    {data.AttendentName}
-                                  </div>
-                                </td>
-                                <td>{data.CustomerName}</td>
-                                {data.ProductType === "Sale" ? (
-                                  <td>
-                                    <span className="badge bg-success">
-                                      Sale
-                                    </span>
-                                  </td>
-                                ) : (
-                                  <td>
-                                    <span className="badge bg-primary">
-                                      Service
-                                    </span>
-                                  </td>
-                                )}
-                                <td>{data.ProductUnitPrice}</td>
-                                <td>{data.ProductQuantityTotal}</td>
-                                <td>{data.Amount}</td>
-                              </tr>
-                            ))}
-                      </tbody>
-                    </table>
-                  </div>
+                  <CardTitle className="h4">Summary of Uploaded CSV</CardTitle>
+                  <p className="card-title-desc">
+                    Sort, search, filer, and enjoy with the summary view of your
+                    uploaded csv.
+                  </p>
+
+                  <MDBDataTable
+                    responsive
+                    striped
+                    bordered
+                    data={tableData || []}
+                  />
                 </CardBody>
               </Card>
             </Col>
