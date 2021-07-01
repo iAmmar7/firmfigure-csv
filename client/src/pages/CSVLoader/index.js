@@ -88,8 +88,6 @@ function CSVLoader(props) {
     else setError("Unable to upload the CSV");
   };
 
-  console.log("csvData", csvData);
-
   const salesData = (csvData || []).filter(data => data.ProductType === "Sale");
   const servicesData = (csvData || []).filter(
     data => data.ProductType === "Service"
@@ -133,16 +131,22 @@ function CSVLoader(props) {
         width: 150,
       },
       {
-        label: "AttendentName",
+        label: "Attendent Name",
         field: "AttendentName",
         sort: "asc",
         width: 200,
       },
       {
-        label: "CustomerName",
+        label: "Customer Name",
         field: "CustomerName",
         sort: "asc",
         width: 200,
+      },
+      {
+        label: "Product",
+        field: "Name",
+        sort: "asc",
+        width: 150,
       },
       {
         label: "Product Type",
@@ -154,19 +158,19 @@ function CSVLoader(props) {
         label: "Unit Price",
         field: "ProductUnitPrice",
         sort: "asc",
-        width: 100,
+        width: 80,
       },
       {
         label: "Quantity",
         field: "ProductQuantityTotal",
         sort: "asc",
-        width: 100,
+        width: 80,
       },
       {
         label: "Amount",
         field: "Amount",
         sort: "asc",
-        width: 100,
+        width: 80,
       },
     ],
     rows: (csvData || []).map((data, index) => ({
@@ -174,14 +178,13 @@ function CSVLoader(props) {
       Date: moment(data.Date).format("DD/MM/YYYY"),
       AttendentName: data.AttendentName,
       CustomerName: data.CustomerName,
+      Name: data.Name,
       ProductType: data.ProductType,
       ProductUnitPrice: data.ProductUnitPrice,
       ProductQuantityTotal: data.ProductQuantityTotal,
       Amount: data.Amount,
     })),
   };
-
-  console.log("tableData", tableData);
 
   return (
     <React.Fragment>
