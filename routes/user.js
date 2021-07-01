@@ -44,6 +44,7 @@ router.post('/csv-upload', async (req, res) => {
           AttendentName: result[i]['D'],
           CustomerID: result[i]['E'],
           CustomerName: result[i]['F'],
+          Name: result[i]['G'],
           ProductType: result[i]['H'],
           Description: result[i]['I'],
           ProductUnitPrice: result[i]['J'],

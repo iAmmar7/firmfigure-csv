@@ -27,11 +27,10 @@ import user6 from "../../assets/images/users/user-6.jpg";
 import servicesIcon1 from "../../assets/images/services-icon/01.png";
 import servicesIcon2 from "../../assets/images/services-icon/02.png";
 import servicesIcon3 from "../../assets/images/services-icon/03.png";
-import servicesIcon4 from "../../assets/images/services-icon/04.png";
 
 // Charts
-import SparkLine from "../AllCharts/sparkline/sparkline";
-import SparkLine1 from "../AllCharts/sparkline/sparkline1";
+import Doughnut from "../AllCharts/echart/doughnutchart";
+import Pie from "../AllCharts/echart/piechart";
 
 import axios from "axios";
 
@@ -89,16 +88,35 @@ function CSVLoader(props) {
 
   console.log("csvData", csvData);
 
-  const sales = (csvData || []).filter(
-    data => data.ProductType === "Sale"
-  ).length;
-  const service = (csvData || []).filter(
+  const salesData = (csvData || []).filter(data => data.ProductType === "Sale");
+  const servicesData = (csvData || []).filter(
     data => data.ProductType === "Service"
-  ).length;
+  );
   const totalAmount = (csvData || []).reduce(
     (a, b) => +a + +(b["Amount"] || 0),
     0
   );
+
+  const salesItems = [...new Set((salesData || [])?.map(data => data.Name))];
+  const servicesItems = [
+    ...new Set((servicesData || [])?.map(data => data.Name)),
+  ];
+
+  const salesChartData = salesItems.map(item => ({
+    name: item,
+    value: salesData.reduce((init, data) => {
+      return data.Name === item ? init + +data.Amount : init;
+    }, 0),
+  }));
+
+  const servicesChartData = servicesItems.map(item => ({
+    name: item,
+    value: servicesData.reduce((init, data) => {
+      return data.Name === item ? init + +data.Amount : init;
+    }, 0),
+  }));
+
+  console.log("servicesChartData", servicesChartData);
 
   return (
     <React.Fragment>
@@ -158,7 +176,7 @@ function CSVLoader(props) {
                       Sales
                     </h5>
                     <h4 className="fw-medium font-size-24">
-                      {sales}
+                      {salesData.length}
                       <i className="mdi mdi-arrow-split-horizontal text-muted ms-2"></i>
                     </h4>
                   </div>
@@ -179,7 +197,7 @@ function CSVLoader(props) {
                       Service
                     </h5>
                     <h4 className="fw-medium font-size-24">
-                      {service}
+                      {servicesData.length}
                       <i className="mdi mdi-arrow-split-horizontal text-muted ms-2"></i>
                     </h4>
                   </div>
@@ -206,6 +224,30 @@ function CSVLoader(props) {
                   </div>
                   <div className="pt-2">
                     <p className="text-white-50 mb-0 mt-1">In this CSV</p>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* Charts */}
+          <Row>
+            <Col lg="6">
+              <Card>
+                <CardBody>
+                  <h4 className="mt-0 header-title mb-4">Sale Stats</h4>
+                  <div id="doughnut-chart" className="e-chart">
+                    <Doughnut label={salesItems} data={salesChartData} />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="6">
+              <Card>
+                <CardBody>
+                  <h4 className="mt-0 header-title mb-4">Service Stats</h4>
+                  <div id="pie-chart" className="e-chart">
+                    <Pie labels={servicesItems} data={servicesChartData} />
                   </div>
                 </CardBody>
               </Card>
