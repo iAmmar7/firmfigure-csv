@@ -25,7 +25,7 @@ router.post('/csv-upload', async (req, res) => {
     const { csv } = files;
 
     try {
-      if (error) throw 'Unable to upload image!';
+      if (error) throw 'Unable to upload CSV!';
 
       // const jsonArray = await csvtojson().fromFile(csv.path);
 
@@ -57,7 +57,40 @@ router.post('/csv-upload', async (req, res) => {
 
       if (!csvData) throw 'Unable to store the data!';
 
-      return res.status(200).json({ success: true, csvData });
+      const salesData = (csvData || []).filter((data) => data.ProductType === 'Sale');
+      const servicesData = (csvData || []).filter((data) => data.ProductType === 'Service');
+      const totalAmount = (csvData || []).reduce((a, b) => +a + +(b['Amount'] || 0), 0);
+
+      const salesItems = [...new Set((salesData || [])?.map((data) => data.Name))];
+      const servicesItems = [...new Set((servicesData || [])?.map((data) => data.Name))];
+
+      const salesChartData = salesItems.map((item) => ({
+        name: item,
+        value: salesData.reduce((init, data) => {
+          return data.Name === item ? init + +data.Amount : init;
+        }, 0),
+      }));
+
+      const servicesChartData = servicesItems.map((item) => ({
+        name: item,
+        value: servicesData.reduce((init, data) => {
+          return data.Name === item ? init + +data.Amount : init;
+        }, 0),
+      }));
+
+      return res.status(200).json({
+        success: true,
+        csv: {
+          csvData,
+          salesData,
+          servicesData,
+          totalAmount,
+          salesItems,
+          servicesItems,
+          salesChartData,
+          servicesChartData,
+        },
+      });
     } catch (error) {
       console.log(error);
       if (csv) fs.unlinkSync(csv.path);

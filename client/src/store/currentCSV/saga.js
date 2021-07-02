@@ -1,32 +1,37 @@
-import { takeEvery, fork, put, all, call } from "redux-saga/effects";
+import { takeLatest, put, call } from "redux-saga/effects";
 
-// Account Redux states
+// CurrentCSV Redux states
+import store from "../";
 import { UPLOAD_CSV, UPLOAD_CSV_FAILED } from "./actionTypes";
-import { uploadCSVSuccessful, uploadCSVFailed } from "./actions";
+import {
+  uploadCSVSuccessful,
+  uploadCSVFailed,
+  updateUploading,
+} from "./actions";
 
 import { post } from "../../helpers/api_helper";
 
 function* uploadCSV({ payload: { data } }) {
-  console.log("saga", data);
+  const formData = new FormData();
+  formData.append("csv", data);
+
   try {
-    const response = yield call(post, "/user/csv-upload", data);
-    console.log("saga response", response);
-    console.log(response);
-    yield put(uploadCSVSuccessful(response));
+    const response = yield call(post, "/user/csv-upload", formData, {
+      onUploadProgress: progressEvent => {
+        if (progressEvent.lengthComputable) {
+          store.dispatch(
+            updateUploading(
+              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            )
+          );
+        }
+      },
+    });
+    yield put(uploadCSVSuccessful(response.csv));
   } catch (error) {
-    yield put(
-      uploadCSVFailed(error?.response?.data?.message || "Unknown error")
-    );
+    yield put(uploadCSVFailed(error?.response?.message || "Unknown error"));
   }
 }
-
-function* uploadCSVError(error) {
-  yield put(uploadCSVFailed(error));
+export default function* currentCSVSaga() {
+  yield takeLatest(UPLOAD_CSV, uploadCSV);
 }
-
-function* currentCSVSaga() {
-  yield takeEvery(UPLOAD_CSV, uploadCSV);
-  yield takeEvery(UPLOAD_CSV_FAILED, uploadCSVError);
-}
-
-export default currentCSVSaga;

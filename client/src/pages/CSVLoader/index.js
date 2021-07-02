@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MetaTags from "react-meta-tags";
 import { MDBDataTable } from "mdbreact";
 import moment from "moment";
@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 
 // Actions
-// import { uploadCSV, apiError, uploadCSVFailed } from "../../store/actions";
+import { uploadCSV, uploadCSVFailed, clearAll } from "../../store/actions";
 
 // import images
 import user1 from "../../assets/images/users/user-1.jpg";
@@ -34,28 +34,20 @@ import servicesIcon3 from "../../assets/images/services-icon/03.png";
 import Doughnut from "../AllCharts/echart/doughnutchart";
 import Pie from "../AllCharts/echart/piechart";
 
-import axios from "axios";
-
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
-const API_URL =
-  process.env.REACT_APP_NODE_ENV === "development"
-    ? `${process.env.REACT_APP_PETROMIN_CSV_DEV_BE_URL}/api`
-    : `${process.env.REACT_APP_PETROMIN_CSV_PROD_BE_URL}/api`;
-
 function CSVLoader(props) {
-  const [uploading, setUploading] = useState(0);
-  const [error, setError] = useState(null);
-  const [csvData, setCSVData] = useState([]);
   const inputRef = useRef(null);
 
-  // const { error, loading, csv } = props;
+  const { error, loading, uploading, csv } = useSelector(
+    ({ currentCSV }) => currentCSV
+  );
+  const dispatch = useDispatch();
 
   const uploadCSVChange = async event => {
     event.stopPropagation();
     event.preventDefault();
-    setError(null);
-    setUploading(0);
+    dispatch(clearAll());
 
     const file = event.target.files[0];
 
@@ -64,57 +56,12 @@ function CSVLoader(props) {
     const ext = file?.name.split(".").pop();
 
     if (ext !== "csv" && ext !== "xls" && ext !== "xlsx") {
-      setError("Only CSV files are allowed");
-      // uploadCSVFailed("Only CSV files are allowed");
+      dispatch(uploadCSVFailed("Only CSV files are allowed"));
+      return;
     }
 
-    const data = new FormData();
-    data.append("csv", file);
-
-    const apiRespone = await axios.post(API_URL + "/user/csv-upload", data, {
-      headers: {
-        Authorization: localStorage.authToken,
-      },
-      onUploadProgress: progressEvent => {
-        if (progressEvent.lengthComputable) {
-          setUploading(
-            Math.round((progressEvent.loaded * 100) / progressEvent.total)
-          );
-        }
-      },
-    });
-
-    if (apiRespone.data.success) setCSVData(apiRespone.data.csvData);
-    else setError("Unable to upload the CSV");
+    dispatch(uploadCSV(file));
   };
-
-  const salesData = (csvData || []).filter(data => data.ProductType === "Sale");
-  const servicesData = (csvData || []).filter(
-    data => data.ProductType === "Service"
-  );
-  const totalAmount = (csvData || []).reduce(
-    (a, b) => +a + +(b["Amount"] || 0),
-    0
-  );
-
-  const salesItems = [...new Set((salesData || [])?.map(data => data.Name))];
-  const servicesItems = [
-    ...new Set((servicesData || [])?.map(data => data.Name)),
-  ];
-
-  const salesChartData = salesItems.map(item => ({
-    name: item,
-    value: salesData.reduce((init, data) => {
-      return data.Name === item ? init + +data.Amount : init;
-    }, 0),
-  }));
-
-  const servicesChartData = servicesItems.map(item => ({
-    name: item,
-    value: servicesData.reduce((init, data) => {
-      return data.Name === item ? init + +data.Amount : init;
-    }, 0),
-  }));
 
   const tableData = {
     columns: [
@@ -173,7 +120,7 @@ function CSVLoader(props) {
         width: 80,
       },
     ],
-    rows: (csvData || []).map((data, index) => ({
+    rows: (csv?.csvData || []).map((data, index) => ({
       id: index + 1,
       Date: moment(data.Date).format("DD/MM/YYYY"),
       AttendentName: data.AttendentName,
@@ -244,7 +191,7 @@ function CSVLoader(props) {
                       Sales
                     </h5>
                     <h4 className="fw-medium font-size-24">
-                      {salesData.length}
+                      {csv?.salesData?.length || 0}
                       <i className="mdi mdi-arrow-split-horizontal text-muted ms-2"></i>
                     </h4>
                   </div>
@@ -265,7 +212,7 @@ function CSVLoader(props) {
                       Service
                     </h5>
                     <h4 className="fw-medium font-size-24">
-                      {servicesData.length}
+                      {csv?.servicesData?.length || 0}
                       <i className="mdi mdi-arrow-split-horizontal text-muted ms-2"></i>
                     </h4>
                   </div>
@@ -286,7 +233,7 @@ function CSVLoader(props) {
                       Total Amount
                     </h5>
                     <h4 className="fw-medium font-size-24">
-                      {totalAmount}
+                      {csv?.totalAmount}
                       <i className="mdi mdi-arrow-up text-success ms-2"></i>
                     </h4>
                   </div>
@@ -305,7 +252,10 @@ function CSVLoader(props) {
                 <CardBody>
                   <h4 className="mt-0 header-title mb-4">Sale Stats</h4>
                   <div id="doughnut-chart" className="e-chart">
-                    <Doughnut label={salesItems} data={salesChartData} />
+                    <Doughnut
+                      label={csv?.salesItems}
+                      data={csv?.salesChartData}
+                    />
                   </div>
                 </CardBody>
               </Card>
@@ -315,7 +265,10 @@ function CSVLoader(props) {
                 <CardBody>
                   <h4 className="mt-0 header-title mb-4">Service Stats</h4>
                   <div id="pie-chart" className="e-chart">
-                    <Pie labels={servicesItems} data={servicesChartData} />
+                    <Pie
+                      labels={csv?.servicesItems}
+                      data={csv?.servicesChartData}
+                    />
                   </div>
                 </CardBody>
               </Card>
@@ -348,16 +301,5 @@ function CSVLoader(props) {
     </React.Fragment>
   );
 }
-
-// const mapStatetoProps = state => {
-//   const { csv, error, loading } = state.currentCSV;
-//   return { csv, error, loading };
-// };
-
-// export default connect(mapStatetoProps, {
-//   uploadCSV,
-//   apiError,
-//   uploadCSVFailed,
-// })(CSVLoader);
 
 export default CSVLoader;
