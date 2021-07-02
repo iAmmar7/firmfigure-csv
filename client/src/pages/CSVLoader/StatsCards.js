@@ -62,7 +62,7 @@ function StatsCards({ sales, services, totalAmount }) {
                 Total Amount
               </h5>
               <h4 className="fw-medium font-size-24">
-                {totalAmount}
+                {totalAmount || 0}
                 <i className="mdi mdi-arrow-up text-success ms-2"></i>
               </h4>
             </div>

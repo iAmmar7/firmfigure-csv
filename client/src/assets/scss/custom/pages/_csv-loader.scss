@@ -5,3 +5,9 @@
 .hidden {
   display: none;
 }
+
+.mdTable-footer-hide {
+  tbody + thead {
+    display: none;
+  }
+}

@@ -67,19 +67,19 @@ function CSVLoader(props) {
                   <Progress animated color="primary" value={uploading} />
                 </Col>
                 <Col xs="4" sm="2" lg="2" className="text-end">
+                  <input
+                    type="file"
+                    id="csv"
+                    name="csv"
+                    className="hidden"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    ref={inputRef}
+                    onChange={event => uploadCSVChange(event)}
+                  />
                   <Button
                     color="primary"
                     onClick={() => inputRef.current.click()}
                   >
-                    <input
-                      type="file"
-                      id="csv"
-                      name="csv"
-                      className="hidden"
-                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                      ref={inputRef}
-                      onChange={event => uploadCSVChange(event)}
-                    />
                     Upload a CSV
                   </Button>
                 </Col>

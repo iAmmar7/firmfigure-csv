@@ -24,7 +24,7 @@ function Pie(props) {
       color: ["#02a499", "#f8b425", "#ec4561", "#38a4f8", "#3c4ccf"],
       series: [
         {
-          name: "Total sales",
+          name: "Total services",
           type: "pie",
           radius: "55%",
           center: ["50%", "60%"],

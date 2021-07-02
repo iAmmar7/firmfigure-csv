@@ -86,7 +86,14 @@ function CSVTable({ data }) {
               uploaded csv.
             </p>
 
-            <MDBDataTable responsive striped bordered data={tableData || []} />
+            <MDBDataTable
+              responsive
+              striped
+              bordered
+              hover
+              data={tableData || []}
+              className="mdTable-footer-hide"
+            />
           </CardBody>
         </Card>
       </Col>

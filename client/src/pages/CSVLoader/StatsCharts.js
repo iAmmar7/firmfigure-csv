@@ -23,7 +23,7 @@ function StatsCharts({ salesLabel, servicesLabels, salesData, servicesData }) {
           <CardBody>
             <h4 className="mt-0 header-title mb-4">Service Stats</h4>
             <div id="pie-chart" className="e-chart">
-              <Pie labels={salesData} data={servicesData} />
+              <Pie labels={servicesLabels} data={servicesData} />
             </div>
           </CardBody>
         </Card>
