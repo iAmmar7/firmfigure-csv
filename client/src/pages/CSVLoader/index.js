@@ -33,7 +33,7 @@ function CSVLoader(props) {
   const uploadCSVChange = async event => {
     event.stopPropagation();
     event.preventDefault();
-    dispatch(clearAll());
+    clearCSV();
 
     const file = event.target.files[0];
 
@@ -49,6 +49,10 @@ function CSVLoader(props) {
     dispatch(uploadCSV(file));
   };
 
+  const clearCSV = () => {
+    dispatch(clearAll());
+  };
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -62,28 +66,39 @@ function CSVLoader(props) {
           {/* CSV Upload */}
           <Card>
             <CardBody>
-              <Row className="align-items-center justify-content-center">
-                <Col xs="8" sm="10" lg="10">
+              <div className="csv-uploader-container">
+                <div className="progress-wrapper">
                   <Progress animated color="primary" value={uploading} />
-                </Col>
-                <Col xs="4" sm="2" lg="2" className="text-end">
-                  <input
-                    type="file"
-                    id="csv"
-                    name="csv"
-                    className="hidden"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                    ref={inputRef}
-                    onChange={event => uploadCSVChange(event)}
-                  />
-                  <Button
-                    color="primary"
-                    onClick={() => inputRef.current.click()}
-                  >
-                    Upload a CSV
-                  </Button>
-                </Col>
-              </Row>
+                </div>
+                <input
+                  type="file"
+                  id="csv"
+                  name="csv"
+                  className="hidden"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  ref={inputRef}
+                  onChange={event => uploadCSVChange(event)}
+                />
+                <div className="btn-container">
+                  <div className="upload-btn-wrapper">
+                    <Button
+                      color="primary"
+                      onClick={() => inputRef.current.click()}
+                    >
+                      Upload a CSV
+                    </Button>
+                  </div>
+                  <div className="clear-btn-wrapper">
+                    <Button
+                      color="secondary"
+                      disabled={!csv || loading}
+                      onClick={clearCSV}
+                    >
+                      <i className="fas fa-redo clr-primary"></i>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </CardBody>
           </Card>
 
